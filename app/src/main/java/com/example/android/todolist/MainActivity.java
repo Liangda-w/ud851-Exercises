@@ -28,6 +28,8 @@ import android.view.View;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
+import com.example.android.todolist.database.AppDatabase;
+
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemClickListener {
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
     private TaskAdapter mAdapter;
 
     // TODO (1) Create AppDatabase member variable for the Database
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         });
 
         // TODO (2) Initialize member variable for the data base
+        mDb = AppDatabase.getInstance(getApplicationContext());
     }
 
     /**
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         super.onResume();
         // TODO (3) Call the adapter's setTasks method using the result
         // of the loadAllTasks method from the taskDao
+        mAdapter.setTasks(mDb.taskDao().loadAllTasks());
     }
 
     @Override
